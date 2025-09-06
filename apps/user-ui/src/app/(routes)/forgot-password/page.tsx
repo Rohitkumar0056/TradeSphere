@@ -195,7 +195,7 @@ const ForgotPassword = () => {
                                 Enter OTP
                             </h3>
                             <div className='flex justify-center gap-6'>
-                                {otp?.map((digit, index) => (
+                                {otp.map((digit, index) => (
                                     <input type="text" key={index} ref={(el) => {
                                         if(el) inputRefs.current[index] = el;
                                     }}

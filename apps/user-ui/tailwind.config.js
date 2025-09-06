@@ -9,8 +9,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        Roboto: ["var(--font-roboto)"],
-        Poppins: ["var(--font-poppins)"] 
+        roboto: ["var(--font-roboto)"],
+        poppins: ["var(--font-poppins)"],
+        oregano: ["var(--font-oregano)"],
       }
     },
   },

@@ -1,16 +1,19 @@
+'use client';
 import React from 'react'
 import Link from 'next/link'
 import {Search, HeartIcon, ShoppingCartIcon} from "lucide-react";
 import ProfileIcon from 'apps/user-ui/src/assets/svgs/profile-icon';
 import HeaderBottom from './header-bottom';
+import useUser from 'apps/user-ui/src/hooks/useUser';
 
 const Header = () => {
+  const {user, isLoading} = useUser();
   return (
     <div className='w-full bg-white'>
       <div className="w-[80%] py-5 m-auto flex items-center justify-between">
         <div>
             <Link href={"/"}>
-                <span className='text-3xl font-[500]'>Eshop</span>
+                <span className='text-3xl font-[500]'>E-Shop</span>
             </Link>
         </div>
         <div className='w-[50%] relative'>
@@ -19,15 +22,31 @@ const Header = () => {
                 <Search color='white'/>
             </div>
         </div>
-        <div className='flex items-center gap-8 pb-2'>
+        <div className='flex items-center gap-8'>
             <div className='flex items-center gap-2'>
-                <Link href={"/login"} className='border-2 w-[40px] h-[40px] flex items-center justify-center rounded-full border-[#010f1c1a]'>
-                    <ProfileIcon />
-                </Link>
-                <Link href={"login"}>
-                    <span className='block font-medium'>Hello,</span>
-                    <span className='font-semibold'>Sign In</span>
-                </Link>    
+                {!isLoading && user ? (
+                    <>
+                        <Link href={"/profile"} className='border-2 w-[40px] h-[40px] flex items-center justify-center rounded-full border-[#010f1c1a]'>
+                            <ProfileIcon />
+                        </Link>
+
+                        <Link href={"/profile"}>
+                            <span className='block font-medium'>Hello,</span>
+                            <span className='font-semibold'>{user?.name?.split(" ")[0]}</span>
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Link href={"/login"} className='border-2 w-[40px] h-[40px] flex items-center justify-center rounded-full border-[#010f1c1a]'>
+                            <ProfileIcon />
+                        </Link>
+
+                        <Link href={"/login"}>
+                            <span className='block font-medium'>Hello,</span>
+                            <span className='font-semibold'>{isLoading ? "..." : "Sign In"}</span>
+                        </Link>   
+                    </>
+                )} 
             </div>
             <div className='flex items-center gap-5'>
                 <Link href={"/wishlist"} className='relative'>

@@ -39,3 +39,55 @@
     Create (routes)/login/page.tsx for login componenet, and similarly create signup page
 
 15. Set up tanstack query in providers.tsx and import it in layout.tsx
+    Create submit otp component and forgot password page.
+
+16. Create get logged in user api and refresh token user api and create a isAuthenticated middleware.
+
+17. Create a custom axiosInstance in user-ui/src/utils
+    Create a useUser hooks to get the details of the logged in user in the client.
+
+18. Create a new service - seller_ui, in which create the login and sign up pages
+    Now, update the prisma or the database structure to add seller model
+    Create seller backend apis
+
+19. Create create shop component and connect with stripe and create other seller routes and controller
+    Create two new middlewares for roles
+
+20. Create seller dashboard and layout and in which create a Sidebar
+    Create useSeller and useSidebar hooks
+    Create sidebar component and its styling files
+
+21. Update refresh token api for seller also
+
+22. Create create product component in the dashboard page
+    Create components in the packages folder to use in the Create Product page in the dashboard 
+
+23. Create initializeSiteConfig function inside api-gateway and create its model in the database, it will be called when the server is started.
+    It will store categories and subCategories data.
+
+24. Create a new backend service - product-service, set it up and connect with api-gateway
+    Create product routes and controller  
+
+25. Create database collection for Discount codes and create three API for discount codes    
+    Create the discount-codes page inside the dashboard, create delet-discount-code modal
+
+26. Set up ImageKit in the project - Create APIs for image handling
+    Change logic of image upload and delete in frontend
+    Add AI enhancement features
+
+27. Create Product model in the database
+    Create API for product management in the product-service backend
+
+28. Create All products page and its backend APIs.
+    Create delete and restore product logic.
+    Set up a cron-job to automatically delete exired products after 24 hours and import it in main.ts file in product-service.
+
+29. Create hero section and product section and product-card component in the user-ui 
+    Create get stripe acc details api and getAllProducts api
+
+** add the rating svg, add the starting and ending time in the products model **
+
+
+30. Create the product details component
+
+
