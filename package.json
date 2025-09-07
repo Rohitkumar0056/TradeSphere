@@ -1,5 +1,5 @@
 {
-  "name": "@./source",
+  "name": "source",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -43,8 +43,7 @@
     "stripe": "^17.7.0",
     "styled-components": "^6.1.19",
     "swagger-autogen": "^2.23.7",
-    "swagger-ui-express": "^5.0.1",
-    "table": "github:tanstack/react-table"
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@nx/esbuild": "20.8.1",
