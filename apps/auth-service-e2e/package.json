@@ -1,5 +1,5 @@
 {
-  "name": "@./auth-service-e2e",
+  "name": "@myorg/auth-service-e2e",
   "version": "0.0.1",
   "private": true,
   "nx": {

@@ -1,5 +1,5 @@
 {
-  "name": "@./seller-service",
+  "name": "@myorg/seller-service",
   "version": "0.0.1",
   "private": true,
   "nx": {
