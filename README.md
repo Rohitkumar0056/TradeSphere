@@ -1,82 +1,84 @@
-# 
+# TradeSphere
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+🛒 **TradeSphere** is a scalable, production-ready multi-vendor e-commerce backend built with a microservices architecture and managed in a single monorepo using Nx.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## 📦 Features  
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/node?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- ✔️ **Microservices architecture** (decoupled services for scalability)  
+- ✔️ **Multi-role support**: User, Seller, Admin  
+- ✔️ **Authentication & Authorization** with JWT  
+- ✔️ **Product, Order, and Cart Management**  
+- ✔️ **Inventory & Stock Tracking**  
+- ✔️ **Vendor Management & Seller Dashboard APIs**  
+- ✔️ **Admin Control for Monitoring & Approvals**  
+- ✔️ **File uploads & optimization** with ImageKit  
+- ✔️ **Redis-based caching & session management**  
+- ✔️ **API Documentation** with Swagger UI
 
-## Finish your CI setup
+## 📂 Microservices
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/ubtD0u4lGj)
+- **Auth Service:** User & seller registration, login, JWT, password reset, OTP, etc.
+- **Product Service:** Product CRUD, categories, discounts, search, image upload.
+- **Order Service:** Cart, checkout, payment (Stripe), order tracking, notifications.
+- **Seller Service:** Seller profile, shop management, shop images, notifications.
+- **Admin Service:** Admin dashboard, user/seller management, site config.
+- **API Gateway:** Central entry point, routing, rate limiting, CORS, aggregation.
 
+## Roles
 
-## Run tasks
+- 👤 **User:** Browse, search, purchase products, manage profile & addresses.
+- 🏬 **Seller:** Manage shop, products, orders, profile, analytics.
+- 🛡️ **Admin:** Platform management, user/seller moderation, site configuration.
 
-To run the dev server for your app, use:
+## 🚀 Tech Stack  
 
-```sh
-npx nx serve auth-service
-```
+- **Runtime & Framework**: [Node.js] + [Express.js]  
+- **Database**: [MongoDB]  
+- **ORM**: [Prisma] 
+- **Caching / Queues**: [Redis]
+- **API Documentation**: [Swagger]
+- **Payments**: [Stripe]
+- **File & Media Storage**: [ImageKit]
+- **Monorepo Management**: [Nx]
 
-To create a production bundle:
+## Getting Started
 
-```sh
-npx nx build auth-service
-```
+### Prerequisites
 
-To see all available targets to run for a project, run:
+- Node.js >= 18.x
+- MongoDB >= 4.x
+- Redis
+- [ImageKit](https://imagekit.io/) account (for media storage)
+- [Stripe](https://stripe.com/) account (for payments)
 
-```sh
-npx nx show project auth-service
-```
+### Installation
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+1. Install dependencies:
+    ```bash
+    npm install
+    ```
+2. Set up environment variables in `.env.local`.
+3. Run the development server:
+    ```bash
+    npm run dev
+    ```
+4. Database:
+   Prisma is used as the ORM for MongoDB.
+   Run migrations and generate Prisma client:
+   ```bash
+    npx prisma generate
+    ```
+5. API Documentation:
+   Each service exposes Swagger docs:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+  ```bash
+  Auth: http://localhost:6001/api-docs
+  Product: http://localhost:6002/api-docs
+  Seller: http://localhost:6003/api-docs
+  Order: http://localhost:6004/api-docs
+  Admin: http://localhost:6005/api-docs
+  ```
 
-## Add new projects
+## License
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/node:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/node:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/node?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+MIT
