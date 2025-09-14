@@ -316,7 +316,7 @@ export const createOrder = async(req: Request, res: Response, next: NextFunction
                 //send email to user
                 await sendEmail(
                     email,
-                    "Your Eshop Order Confirmation",
+                    "Your TradeSphere Order Confirmation",
                     "order-confirmation",
                     {
                         name,
@@ -324,7 +324,7 @@ export const createOrder = async(req: Request, res: Response, next: NextFunction
                         totalAmount: coupon?.discountAmount
                             ? totalAmount - coupon?.discountAmount
                             : totalAmount,
-                        trackingUrl: `https://eshop.com/order/${order.id}`,
+                        trackingUrl: `https://TradeSphere.com/order/${order.id}`,
                     }
                 );
 
@@ -349,7 +349,7 @@ export const createOrder = async(req: Request, res: Response, next: NextFunction
                             message: `A customer just ordered ${productTitle} from your shop.`,
                             creatorId: userId,
                             receiverId: shop.sellerId,
-                            redirect_link: `https://eshop.com/order/${order.id}`,
+                            redirect_link: `https://TradeSphere.com/order/${order.id}`,
                         },
                     });
                 }
@@ -361,7 +361,7 @@ export const createOrder = async(req: Request, res: Response, next: NextFunction
                         message: `A new order was placed by ${name}`,
                         creatorId: userId,
                         receiverId: "admin",
-                        redirect_link: `https://eshop.com/order/${sessionId}`,
+                        redirect_link: `https://TradeSphere.com/order/${sessionId}`,
                     },
                 });
 

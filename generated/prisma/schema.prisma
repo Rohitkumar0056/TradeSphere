@@ -160,17 +160,6 @@ model products {
   //@@map("products")
 }
 
-// enum OrderStatus {
-//   Pending
-//   Paid
-//   Cancelled
-//   Ordered
-//   Packed
-//   Shipped
-//   OutForDelivery
-//   Delivered
-// }
-
 model userAnalytics {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   userId          String   @unique
