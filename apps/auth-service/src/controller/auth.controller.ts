@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import { setCookie } from "../utils/cookies/setCookie";
 import Stripe from "stripe";
+import { sendLog } from "@packages/utils/logs/send-logs";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: "2025-02-24.acacia",
@@ -30,7 +31,6 @@ export const userRegistration = async (req: Request, res: Response, next: NextFu
         await checkOtpRestrictions(email, next);
         await trackOtpRequests(email, next);
         await sendOtp(name, email, "user-activation-mail");
-
         res.status(200).json({
             messgae: "OTP send to email. Please verify your account.",
         });
@@ -134,10 +134,13 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 
 //Logout user
 export const logOutUser = async (req: Request, res: Response, next: NextFunction) => {
-    res.clearCookie("access_token");
-    res.clearCookie("refresh_token");
-
-    res.status(200).json({ success: true });
+    try {
+        res.clearCookie("access_token");
+        res.clearCookie("refresh_token");
+        res.status(200).json({ success: true });
+    } catch(error) {
+        next(error);
+    }
 };
 
 //Refresh token
@@ -188,7 +191,6 @@ export const refreshToken = async (req: any, res: Response, next: NextFunction) 
         }
 
         req.role = decoded.role;
-        
         return res.status(201).json({ success: true });
     } catch (error) {
         return next(error);
@@ -317,9 +319,9 @@ export const registerSeller = async (req: Request, res: Response, next: NextFunc
         await checkOtpRestrictions(email, next);
         await trackOtpRequests(email, next);
         await sendOtp(name, email, "seller-activation");
-
         res.status(200).json({ message: "OTP sent to email. Please verify your account." });
     } catch(error) {
+        await sendLog({ type: "error", message: `Error in registerSeller: ${(error as any)?.message || error}`, source: "auth-service" });
         next(error);
     }
 };
@@ -356,6 +358,7 @@ export const verifySeller = async (req: Request, res: Response, next: NextFuncti
 
         res.status(200).json({ message: "Seller registered successfully!", seller});
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in verifySeller: ${(error as any)?.message || error}`, source: "auth-service" });
         next(error);
     }
 };
@@ -386,8 +389,10 @@ export const createShop = async (req: Request, res: Response, next: NextFunction
             data: shopData,
         });
 
+        await sendLog({ type: "success", message: `Shop created ${shop.id}`, source: "auth-service" });
         res.status(201).json({success: true, shop});
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in createShop: ${(error as any)?.message || error}`, source: "auth-service" });
         next(error);
     }
 };
@@ -503,10 +508,13 @@ export const loginSeller = async (req: Request, res: Response, next: NextFunctio
 
 //Logout user
 export const logOutSeller = async (req: Request, res: Response, next: NextFunction) => {
-    res.clearCookie("seller-access-token");
-    res.clearCookie("seller-refresh-token");
-
-    res.status(200).json({ success: true });
+    try {
+        res.clearCookie("seller-access-token");
+        res.clearCookie("seller-refresh-token");
+        res.status(200).json({ success: true });
+    } catch(error) {
+        next(error);
+    }  
 };
 
 //Get logged in seller
@@ -668,6 +676,7 @@ export const loginAdmin = async (req: Request, res: Response, next: NextFunction
         setCookie(res, "refresh_token", refreshToken);
         setCookie(res, "access_token", accessToken);
 
+        await sendLog({ type: "success", message: `Admin login successful ${user.email}`, source: "auth-service" });
         res.status(200).json({
             message: "Login successful!",
             user: {
@@ -677,7 +686,20 @@ export const loginAdmin = async (req: Request, res: Response, next: NextFunction
             },
         });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in loginAdmin: ${(error as any)?.message || error}`, source: "auth-service" });
         return next(error);
+    }
+};
+
+//Logout admin
+export const logOutAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.clearCookie("access_token");
+        res.clearCookie("refresh_token");
+
+        res.status(200).json({ success: true });
+    } catch (error) {
+        next(error);
     }
 };
 

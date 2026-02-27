@@ -11,15 +11,16 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@./order-service:build",
-          "runBuildTargetDependencies": false
+          "buildTarget": "@myorg/order-service:build",
+          "runBuildTargetDependencies": false,
+          "inspect": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@./order-service:build:development"
+            "buildTarget": "@myorg/order-service:build:development"
           },
           "production": {
-            "buildTarget": "@./order-service:build:production"
+            "buildTarget": "@myorg/order-service:build:production"
           }
         }
       }

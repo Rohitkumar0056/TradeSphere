@@ -323,6 +323,39 @@ exports.Prisma.NotificationsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ConversationGroupScalarFieldEnum = {
+  id: 'id',
+  isGroup: 'isGroup',
+  name: 'name',
+  creatorId: 'creatorId',
+  participantIds: 'participantIds',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ParticipantScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  userId: 'userId',
+  sellerId: 'sellerId',
+  lastSeenAt: 'lastSeenAt',
+  isOnline: 'isOnline',
+  unreadCount: 'unreadCount',
+  muted: 'muted',
+  joinedAt: 'joinedAt'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderId: 'senderId',
+  senderType: 'senderType',
+  content: 'content',
+  attachments: 'attachments',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -365,7 +398,10 @@ exports.Prisma.ModelName = {
   orders: 'orders',
   orderItems: 'orderItems',
   address: 'address',
-  notifications: 'notifications'
+  notifications: 'notifications',
+  conversationGroup: 'conversationGroup',
+  participant: 'participant',
+  message: 'message'
 };
 
 /**

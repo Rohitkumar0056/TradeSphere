@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
-import { addUserAddress, createShop, createStripeConnectLink, deleteUserAddress, getLayoutData, getSeller, getUser, getUserAddresses, loginAdmin, loginSeller, loginUser, logOutSeller, logOutUser, refreshToken, registerSeller, resetUserPassword, updateUserPassword, userForgotPassword, userRegistration, verifySeller, verifyUser, verifyUserForgotPassword } from '../controller/auth.controller';
+import { addUserAddress, createShop, createStripeConnectLink, deleteUserAddress, getLayoutData, getSeller, getUser, getUserAddresses, loginAdmin, loginSeller, loginUser, logOutAdmin, logOutSeller, logOutUser, refreshToken, registerSeller, resetUserPassword, updateUserPassword, userForgotPassword, userRegistration, verifySeller, verifyUser, verifyUserForgotPassword } from '../controller/auth.controller';
 import isAuthenticated from '@packages/middleware/isAuthenticated';
-import { isSeller } from '@packages/middleware/authorizeRoles';
+import { isAdmin, isSeller } from '@packages/middleware/authorizeRoles';
 
 const router:Router = express.Router();
 
@@ -26,6 +26,7 @@ router.get("/shipping-addresses", isAuthenticated, getUserAddresses);
 router.post("/add-address", isAuthenticated, addUserAddress);
 router.delete("/delete-address/:addressId", isAuthenticated, deleteUserAddress);
 router.post("/login-admin", loginAdmin);
+router.get("/logout-admin", isAuthenticated, isAdmin, logOutAdmin);
 router.get("/get-layouts", getLayoutData);
 
 export default router;

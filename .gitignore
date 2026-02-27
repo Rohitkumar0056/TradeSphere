@@ -47,6 +47,7 @@ test-output
 .next
 out
 
+packages/components
 apps/recommendation-service
 apps/user-ui
 apps/seller-ui

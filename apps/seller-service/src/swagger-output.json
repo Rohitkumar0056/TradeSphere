@@ -5,8 +5,8 @@
     "description": "Automatically generated Swagger docs",
     "version": "1.0.0"
   },
-  "host": "localhost:6001",
-  "basePath": "/",
+  "host": "localhost:6003",
+  "basePath": "/api",
   "schemes": [
     "http"
   ],
@@ -227,6 +227,44 @@
     "/mark-notifications-as-read": {
       "get": {
         "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/follow-shop": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unfollow-shop": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/is-following/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

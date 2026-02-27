@@ -36,6 +36,6 @@ app.use(errorMiddleware);
 const port = process.env.PORT || 6003;
 const server = app.listen(port, () => {
   console.log(`Seller Service running at http://localhost:${port}/api`);
-  console.log(`Swagger Docs available at http://localhost:${port}/docs`);
+  console.log(`Swagger Docs available at http://localhost:${port}/api-docs`);
 });
 server.on('error', console.error);

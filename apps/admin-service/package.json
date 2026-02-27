@@ -11,15 +11,16 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@./admin-service:build",
-          "runBuildTargetDependencies": false
+          "buildTarget": "@myorg/admin-service:build",
+          "runBuildTargetDependencies": false,
+          "inspect": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@./admin-service:build:development"
+            "buildTarget": "@myorg/admin-service:build:development"
           },
           "production": {
-            "buildTarget": "@./admin-service:build:production"
+            "buildTarget": "@myorg/admin-service:build:production"
           }
         }
       }

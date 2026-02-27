@@ -6,7 +6,7 @@
     "dev": "node src/main.ts"
   },
   "nx": {
-    "name": "auth-service",
+    "name": "@myorg/auth-service",
     "projectType": "application",
     "sourceRoot": "auth-service/src",
     "targets": {
@@ -17,15 +17,16 @@
           "build"
         ],
         "options": {
-          "buildTarget": "auth-service:build",
-          "runBuildTargetDependencies": false
+          "buildTarget": "@myorg/auth-service:build",
+          "runBuildTargetDependencies": false,
+          "inspect": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "auth-service:build:development"
+            "buildTarget": "@myorg/auth-service:build:development"
           },
           "production": {
-            "buildTarget": "auth-service:build:production"
+            "buildTarget": "@myorg/auth-service:build:production"
           }
         }
       },

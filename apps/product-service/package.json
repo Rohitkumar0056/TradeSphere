@@ -11,15 +11,16 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@./product-service:build",
-          "runBuildTargetDependencies": false
+          "buildTarget": "@myorg/product-service:build",
+          "runBuildTargetDependencies": false,
+          "inspect": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@./product-service:build:development"
+            "buildTarget": "@myorg/product-service:build:development"
           },
           "production": {
-            "buildTarget": "@./product-service:build:production"
+            "buildTarget": "@myorg/product-service:build:production"
           }
         }
       }

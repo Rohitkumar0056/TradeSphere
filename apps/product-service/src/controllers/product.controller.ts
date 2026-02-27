@@ -3,6 +3,7 @@ import { imagekit } from "@packages/libs/imagekit";
 import prisma from "@packages/libs/prisma";
 import { NextFunction, Request, Response } from "express";
 import { Prisma } from "generated/prisma";
+import { sendLog } from "@packages/utils/logs/send-logs";
 
 //Get product categories
 export const getCategories = async (req: Request, res: Response, next: NextFunction) => {
@@ -10,6 +11,7 @@ export const getCategories = async (req: Request, res: Response, next: NextFunct
         const config = await prisma.site_config.findFirst();
 
         if(!config) {
+            await sendLog({ type: "error", message: "Categories not found", source: "product-service" });
             return res.status(404).json({ error: "Categories not found" });
         }
 
@@ -47,8 +49,10 @@ export const createDiscountCodes = async (req: any, res: Response, next: NextFun
             },
         });
 
+        await sendLog({ type: "success", message: `Created discount code ${discountCode} for seller ${req.seller?.id || 'unknown'}`, source: "product-service" });
         res.status(201).json({ success: true, discount_code });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in createDiscountCodes: ${(error as any)?.message || error}`, source: "product-service" });
         next(error);
     }
 };
@@ -89,8 +93,10 @@ export const deleteDiscountCode = async (req: any, res: Response, next: NextFunc
 
         await prisma.discount_codes.delete({ where: { id } });
 
+        await sendLog({ type: "success", message: `Deleted discount code ${id} by seller ${sellerId}`, source: "product-service" });
         return res.status(200).json({ message: "Discount code successfully deleted" });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in deleteDiscountCode: ${(error as any)?.message || error}`, source: "product-service" });
         next(error);
     }
 };
@@ -210,8 +216,10 @@ export const createProduct = async (req: any, res: Response, next: NextFunction)
             }, include: {images: true},
         });
 
+        await sendLog({ type: "success", message: `Created product ${newProduct.id} by seller ${req.seller?.id || 'unknown'}`, source: "product-service" });
         res.status(201).json({ success: true, newProduct });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in createProduct: ${(error as any)?.message || error}`, source: "product-service" });
         next(error);
     }
 };
@@ -265,11 +273,13 @@ export const deleteProduct = async (req: any, res: Response, next: NextFunction)
             },
         });
 
+        await sendLog({ type: "success", message: `Scheduled product ${productId} for deletion`, source: "product-service" });
         return res.status(200).json({
             message: "Product is scheduled for deletion in 24 hours. You can restore it within this this",
             deletedAt: deletedProduct.deletedAt,
         })
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in deleteProduct: ${(error as any)?.message || error}`, source: "product-service" });
         return next(error);
     }
 };
@@ -305,10 +315,12 @@ export const restoreProduct = async (req: any, res: Response, next: NextFunction
             },
         });
 
+        await sendLog({ type: "success", message: `Restored product ${productId}`, source: "product-service" });
         return res.status(200).json({
             message: "Product restored successfully!",
         })
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in restoreProduct: ${(error as any)?.message || error}`, source: "product-service" });
         return res.status(500).json({ message: "Error restoring product", error });
     }
 };

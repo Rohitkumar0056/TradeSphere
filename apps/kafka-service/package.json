@@ -1,0 +1,29 @@
+{
+  "name": "@myorg/kafka-service",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "targets": {
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "@myorg/kafka-service:build",
+          "runBuildTargetDependencies": false,
+          "inspect": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@myorg/kafka-service:build:development"
+          },
+          "production": {
+            "buildTarget": "@myorg/kafka-service:build:production"
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,8 +5,8 @@
     "description": "Automatically generated Swagger docs",
     "version": "1.0.0"
   },
-  "host": "localhost:6001",
-  "basePath": "/",
+  "host": "localhost:6005",
+  "basePath": "/api",
   "schemes": [
     "http"
   ],
@@ -136,12 +136,45 @@
         }
       }
     },
-    "/get-all": {
+    "/get-customizations": {
       "get": {
         "description": "",
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/update-customizations": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "example": "any"
+                },
+                "subCategories": {
+                  "example": "any"
+                },
+                "logo": {
+                  "example": "any"
+                },
+                "banner": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
           }
         }
       }

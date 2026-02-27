@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "host": "localhost:6001",
-  "basePath": "/",
+  "basePath": "/api",
   "schemes": [
     "http"
   ],
@@ -481,6 +481,16 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/logout-admin": {
+      "get": {
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"

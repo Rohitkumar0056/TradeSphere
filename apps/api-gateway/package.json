@@ -11,15 +11,16 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@./api-gateway:build",
-          "runBuildTargetDependencies": false
+          "buildTarget": "@myorg/api-gateway:build",
+          "runBuildTargetDependencies": false,
+          "inspect": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@./api-gateway:build:development"
+            "buildTarget": "@myorg/api-gateway:build:development"
           },
           "production": {
-            "buildTarget": "@./api-gateway:build:production"
+            "buildTarget": "@myorg/api-gateway:build:production"
           }
         }
       }

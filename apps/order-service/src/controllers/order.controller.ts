@@ -2,6 +2,7 @@ import { NotFoundError, ValidationError } from "@packages/error-handler";
 import prisma from "@packages/libs/prisma";
 import redis from "@packages/libs/redis";
 import { NextFunction, Request, Response } from "express";
+import { sendLog } from "@packages/utils/logs/send-logs";
 import Stripe from "stripe";
 import crypto from "crypto";
 import { Prisma } from "generated/prisma";
@@ -192,7 +193,7 @@ export const createOrder = async(req: Request, res: Response, next: NextFunction
             const sessionId = paymentIntent.metadata.sessionId;
             const userId = paymentIntent.metadata.userId;
 
-            const sessionKey = `payment-sessino:${sessionId}`;
+            const sessionKey = `payment-session:${sessionId}`;
             const sessionData = await redis.get(sessionKey);
 
             if(!sessionData) {
@@ -324,7 +325,7 @@ export const createOrder = async(req: Request, res: Response, next: NextFunction
                         totalAmount: coupon?.discountAmount
                             ? totalAmount - coupon?.discountAmount
                             : totalAmount,
-                        trackingUrl: `https://TradeSphere.com/order/${order.id}`,
+                        trackingUrl: `http://localhost:3002/order/${order.id}`,
                     }
                 );
 
@@ -368,8 +369,10 @@ export const createOrder = async(req: Request, res: Response, next: NextFunction
                 await redis.del(sessionKey);
             }
         }
+        await sendLog({ type: "success", message: `Stripe webhook processed for session ${'unknown'}`, source: "order-service" });
         res.status(200).json({ received: true });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in createOrder webhook: ${(error as any)?.message || error}`, source: "order-service" });
         return next(error);
     }
 };
@@ -575,6 +578,7 @@ export const verifyCouponCode = async(req: any, res: Response, next: NextFunctio
         //prevent discount from being greater than total price
         discountAmount = Math.min(discountAmount, price);
 
+        await sendLog({ type: "success", message: `Coupon ${couponCode} verified for user ${req.user?.id || 'unknown'}`, source: "order-service" });
         res.status(200).json({
             valid: true,
             discount: discount.discountValue,
@@ -584,6 +588,7 @@ export const verifyCouponCode = async(req: any, res: Response, next: NextFunctio
             message: "Discount applied to 1 eligible product",
         });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in verifyCouponCode: ${(error as any)?.message || error}`, source: "order-service" });
         next(error);
     }
 };

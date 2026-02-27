@@ -1,6 +1,6 @@
 import isAuthenticated from '@packages/middleware/isAuthenticated';
 import express, { Router } from 'express';
-import { deleteShop, editSellerProfile, getSellerEvents, getSellerInfo, getSellerProducts, markNotificationAsRead, restoreShop, sellerNotifications, updateProfilePictures, uploadImage } from '../controllers/seller.controller';
+import { deleteShop, editSellerProfile, followShop, getSellerEvents, getSellerInfo, getSellerProducts, isFollowing, markNotificationAsRead, restoreShop, sellerNotifications, unfollowShop, updateProfilePictures, uploadImage } from '../controllers/seller.controller';
 import { isSeller } from '@packages/middleware/authorizeRoles';
 
 const router:Router = express.Router();
@@ -15,5 +15,8 @@ router.get("/get-seller-products/:id", getSellerProducts);
 router.get("/get-seller-events/:id", getSellerEvents);
 router.get("/seller-notifications", isAuthenticated, isSeller, sellerNotifications);
 router.get("/mark-notifications-as-read", isAuthenticated, markNotificationAsRead);
+router.post("/follow-shop", isAuthenticated, followShop);
+router.post("/unfollow-shop", isAuthenticated, unfollowShop);
+router.get("/is-following/:id", isAuthenticated, isFollowing);
 
 export default router;

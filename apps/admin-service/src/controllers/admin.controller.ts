@@ -1,6 +1,7 @@
 import { ValidationError } from "@packages/error-handler";
 import prisma from "@packages/libs/prisma";
 import { NextFunction, Request, Response } from "express";
+import { sendLog } from "@packages/utils/logs/send-logs";
 
 //Get all products
 export const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
@@ -153,8 +154,10 @@ export const addNewAdmin = async (req: Request, res: Response, next: NextFunctio
             },
         });
 
+        await sendLog({ type: "success", message: `Updated admin role for ${email} to ${role}`, source: "admin-service" });
         res.status(201).json({ success: true, updateRole });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in addNewAdmin: ${(error as any)?.message || error}`, source: "admin-service" });
         next(error);
     }
 };
@@ -172,6 +175,56 @@ export const getAllCustomizations = async (req: Request, res: Response, next: Ne
         });
     } catch (error) {
         return next(error);
+    }
+};
+
+//Add new customizations
+export const addNewCustomizations = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { categories, subCategories, logo, banner } = req.body;
+
+        const existingConfig = await prisma.site_config.findFirst();
+
+        // Validate input presence
+        if (!categories && !subCategories && !logo && !banner) {
+            return next(new ValidationError("At least one customization field is required."));
+        }
+
+        let updatedConfig;
+
+        // If config already exists → update
+        if (existingConfig) {
+            updatedConfig = await prisma.site_config.update({
+                where: { id: existingConfig.id },
+                data: {
+                    categories: categories ?? existingConfig.categories,
+                    subCategories: subCategories ?? existingConfig.subCategories,
+                    logo: logo ?? existingConfig.logo,
+                    banner: banner ?? existingConfig.banner,
+                },
+            });
+
+            await sendLog({ type: "success", message: `Site customization updated ${existingConfig.id}`, source: "admin-service" });
+        }
+        // Else → create new config
+        else {
+            updatedConfig = await prisma.site_config.create({
+                data: {
+                    categories: categories || [],
+                    subCategories: subCategories || {},
+                    logo: logo || null,
+                    banner: banner || null,
+                },
+            });
+        }
+
+        res.status(201).json({
+            success: true,
+            config: updatedConfig,
+        });
+    } catch (error) {
+        await sendLog({ type: "error", message: `Error in addNewCustomizations: ${(error as any)?.message || error}`, source: "admin-service" });
+        next(error);
     }
 };
 
@@ -271,8 +324,10 @@ export const getAllNotifications = async (req: Request, res: Response, next: Nex
             },
         });
 
+        await sendLog({ type: "success", message: `Fetched admin notifications count ${notifications.length}`, source: "admin-service" });
         res.status(200).json({ success: true, notifications });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in getAllNotifications: ${(error as any)?.message || error}`, source: "admin-service" });
         next(error);
     }
 };
@@ -289,8 +344,10 @@ export const getUserNotifications = async (req: any, res: Response, next: NextFu
             },
         });
 
+        await sendLog({ type: "success", message: `Fetched notifications for user ${req.user?.id || 'unknown'}`, source: "admin-service" });
         res.status(200).json({ success: true, notifications });
     } catch (error) {
+        await sendLog({ type: "error", message: `Error in getUserNotifications: ${(error as any)?.message || error}`, source: "admin-service" });
         next(error);
     }
 };  

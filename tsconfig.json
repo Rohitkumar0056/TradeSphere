@@ -32,6 +32,15 @@
     },
     {
       "path": "./apps/seller-service"
+    },
+    {
+      "path": "./apps/kafka-service"
+    },
+    {
+      "path": "./apps/chatting-service"
+    },
+    {
+      "path": "./apps/logger-service"
     }
   ]
 }

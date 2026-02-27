@@ -11,15 +11,16 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@./seller-service:build",
-          "runBuildTargetDependencies": false
+          "buildTarget": "@myorg/seller-service:build",
+          "runBuildTargetDependencies": false,
+          "inspect": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@./seller-service:build:development"
+            "buildTarget": "@myorg/seller-service:build:development"
           },
           "production": {
-            "buildTarget": "@./seller-service:build:production"
+            "buildTarget": "@myorg/seller-service:build:production"
           }
         }
       }
